@@ -22,6 +22,7 @@ final class DefaultWeatherViewModel: WeatherViewModel {
         }
     }
 
+    var indeces: [Int] = []
     var loadingStateChangedCallback: ((LoadingState) -> Void)?
     var weatherAlertsUpdatedCallback: (() -> Void)?
 
@@ -47,6 +48,7 @@ final class DefaultWeatherViewModel: WeatherViewModel {
                 let allWeatherAlerts = try await weatherService.fetchWeatherAlerts()
                 await MainActor.run {
                     weatherAlerts = allWeatherAlerts.features
+                    indeces = allWeatherAlerts.indeces
                     isLoading = .loaded
                 }
             } catch {

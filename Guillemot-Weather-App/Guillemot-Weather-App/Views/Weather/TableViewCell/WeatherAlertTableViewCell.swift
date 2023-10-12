@@ -24,7 +24,7 @@ class WeatherAlertTableViewCell: UITableViewCell {
         weatherImageView.alpha = 0.2
     }
 
-    func inflateWith(data: WeatherAlert.Properties) {
+    func inflateWith(data: WeatherAlert.Properties, index: Int) {
         eventNameLabel.text = data.event
         sourceLabel.text = data.senderName
 
@@ -38,13 +38,10 @@ class WeatherAlertTableViewCell: UITableViewCell {
         updateLabel(label: durationLabel, withValue: data.duration?.formattedDuration, prefix: "Duration")
 
         // Image
-        ImageDownloader.downloadImage() { [weak self] (image, error) in
-            if let image = image {
-                self?.weatherImageView.image = image
-            } else if let error = error {
-                self?.weatherImageView.image = UIImage(named: "placeholderImage")
-                print("Error downloading image: \(error)")
-            }
+        if let url = URL(string: "https://picsum.photos/\(String(index))") {
+            weatherImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholderImage"))
+        } else {
+            weatherImageView.image = UIImage(named: "placeholderImage")
         }
     }
 

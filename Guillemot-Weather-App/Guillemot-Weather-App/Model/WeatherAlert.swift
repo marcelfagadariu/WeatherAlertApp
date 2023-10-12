@@ -11,6 +11,10 @@ import Foundation
 struct WeatherAlert: Decodable {
     let features: [Feature]
 
+    // MARK: - Computed property
+    
+    var indeces: [Int] { features.map { _ in Int(arc4random_uniform(1001)) }}
+
     // MARK: - Feature
     struct Feature: Decodable {
         let properties: Properties

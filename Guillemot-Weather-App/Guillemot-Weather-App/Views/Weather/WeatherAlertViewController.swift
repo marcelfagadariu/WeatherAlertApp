@@ -98,8 +98,9 @@ final class WeatherAlertViewController: UIViewController {
 extension WeatherAlertViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let property = viewModel.weatherAlerts[indexPath.row].properties
+        let index = viewModel.indeces[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherAlertTableViewCell.name) as? WeatherAlertTableViewCell else { return UITableViewCell() }
-        cell.inflateWith(data: property)
+        cell.inflateWith(data: property, index: index)
         return cell
     }
     
