@@ -29,27 +29,14 @@ final class DefaultWeatherViewModel: WeatherViewModel {
     // MARK: - Private
 
     private let weatherService: WeatherService
-    private let imageService: ImageService
 
     // MARK: - Init
 
-    init(weatherService: WeatherService, imageService: ImageService) {
+    init(weatherService: WeatherService) {
         self.weatherService = weatherService
-        self.imageService = imageService
     }
 
     // MARK: - Methods
-
-    func getImage(completion: @escaping (URL?) -> Void) {
-        Task {
-            do {
-                let image = try await imageService.fetchImageURL()
-                completion(image)
-            } catch {
-                completion(nil)
-            }
-        }
-    }
 
     func getWeatherAlerts() {
         Task {

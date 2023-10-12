@@ -5,13 +5,10 @@
 //  Created by Marcel on 12.10.2023.
 //
 
-import Foundation
-
 protocol WeatherViewModel {
     var isLoading: LoadingState { get set }
     var weatherAlerts: [WeatherAlert.Feature] { get set }
     func getWeatherAlerts()
-    func getImage(completion: @escaping (URL?) -> Void)
 }
 
 enum LoadingState {

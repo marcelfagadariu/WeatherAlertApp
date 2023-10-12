@@ -26,8 +26,7 @@ final class WeatherAlertViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        let defaultViewModel = DefaultWeatherViewModel(weatherService: DefaultWeatherService(),
-                                                       imageService: DefaultImageService() )
+        let defaultViewModel = DefaultWeatherViewModel(weatherService: DefaultWeatherService())
         self.viewModel = defaultViewModel
         super.init(coder: coder)
     }
@@ -100,7 +99,7 @@ extension WeatherAlertViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let property = viewModel.weatherAlerts[indexPath.row].properties
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherAlertTableViewCell.name) as? WeatherAlertTableViewCell else { return UITableViewCell() }
-        cell.inflateWith(data: property, image: nil)
+        cell.inflateWith(data: property)
         return cell
     }
     

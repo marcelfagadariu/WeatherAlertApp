@@ -18,13 +18,13 @@ class WeatherAlertTableViewCell: UITableViewCell {
     @IBOutlet weak var endDate: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var sourceLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         weatherImageView.alpha = 0.2
     }
 
-    func inflateWith(data: WeatherAlert.Properties, image: URL?) {
+    func inflateWith(data: WeatherAlert.Properties) {
         eventNameLabel.text = data.event
         sourceLabel.text = data.senderName
 
@@ -38,10 +38,13 @@ class WeatherAlertTableViewCell: UITableViewCell {
         updateLabel(label: durationLabel, withValue: data.duration?.formattedDuration, prefix: "Duration")
 
         // Image
-        if let url = image {
-            weatherImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholderImage"))
-        } else {
-            weatherImageView.image = UIImage(named: "placeholderImage")
+        ImageDownloader.downloadImage() { [weak self] (image, error) in
+            if let image = image {
+                self?.weatherImageView.image = image
+            } else if let error = error {
+                self?.weatherImageView.image = UIImage(named: "placeholderImage")
+                print("Error downloading image: \(error)")
+            }
         }
     }
 
