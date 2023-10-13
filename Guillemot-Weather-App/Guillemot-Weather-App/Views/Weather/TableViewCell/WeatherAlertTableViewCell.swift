@@ -8,6 +8,10 @@
 import UIKit
 import SDWebImage
 
+enum Constants: String {
+    case placeholder = "placeholderImage"
+}
+
 class WeatherAlertTableViewCell: UITableViewCell {
 
     // MARK: - @IBOutlet
@@ -21,7 +25,7 @@ class WeatherAlertTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        weatherImageView.alpha = 0.2
+        weatherImageView.alpha = 0.4
     }
 
     func inflateWith(data: WeatherAlert.Properties, index: Int) {
@@ -38,10 +42,12 @@ class WeatherAlertTableViewCell: UITableViewCell {
         updateLabel(label: durationLabel, withValue: data.duration?.formattedDuration, prefix: "Duration")
 
         // Image
-        if let url = URL(string: "https://picsum.photos/\(String(index))") {
-            weatherImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholderImage"))
+
+        let placeholderImage = UIImage(named: Constants.placeholder.rawValue)
+        if let url = URL(string: API.image.imageURL(index: index)) {
+            weatherImageView.sd_setImage(with: url, placeholderImage: placeholderImage)
         } else {
-            weatherImageView.image = UIImage(named: "placeholderImage")
+            weatherImageView.image = placeholderImage
         }
     }
 
